@@ -1,1 +1,2 @@
-# effective_altruism
+# Effective Altruism x DataKind SG
+
