@@ -1,5 +1,6 @@
 FROM jupyter/minimal-notebook:9e056d61b7a5
 
+USER root
 # We need wget to set up the PPA and xvfb to have a virtual screen and unzip to install the Chromedriver
 RUN apt-get install -y wget xvfb unzip
 
