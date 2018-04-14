@@ -22,4 +22,7 @@ RUN R -e 'library(devtools); \
 
 RUN R -e 'library(devtools); \
           install_version("vcd", "1.4-4", repos = "http://cran.us.r-project.org");'
+          
+RUN R -e 'library(devtools); \
+          install_version("ggmap", "2.6.1", repos = "http://cran.us.r-project.org");'
 
