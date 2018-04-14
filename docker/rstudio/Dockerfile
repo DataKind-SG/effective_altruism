@@ -1,4 +1,4 @@
-FROM rocker/rstudio:3.3.3		
+FROM rocker/rstudio:3.4.4
 
 RUN R -e 'install.packages("devtools")'
 
