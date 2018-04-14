@@ -1,0 +1,27 @@
+FROM rocker/rstudio:3.3.3		
+
+RUN R -e 'install.packages("devtools", "1.13.5")'
+
+
+RUN R -e 'library(devtools); \
+          install_version("ggplot2", "2.2.1");'
+
+
+RUN R -e 'library(devtools); \
+          install_version("dplyr", "0.7.4");'
+
+RUN R -e 'library(devtools); \
+          install_version("tidyr", "0.8.0");'
+
+RUN R -e 'library(devtools); \
+          install_version("data.table", "1.10.4-3");'
+
+RUN R -e 'library(devtools); \
+          install_version("leaflet", "1.1.0");'
+
+RUN R -e 'library(devtools); \ 
+          install_version("shiny", "1.0.5", repos = "https://cloud.r-project.org/");'
+
+RUN R -e 'library(devtools); \
+          install_version("vcd", "1.4-4");'
+
