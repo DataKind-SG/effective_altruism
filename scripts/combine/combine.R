@@ -22,7 +22,7 @@ data = rbindlist(lapply(list.files(file_dir), function(i){
   x
 }), fill = T)
 
-#data[,c("X","Unnamed..0") := NULL]
+data[,c("X","Unnamed..0","X.1","X.2","X.3") := NULL]
 
 #export data file
-write.csv(data,"data/output/web_scraping/web_scrape_v2.csv", na="", row.names =F)
+write.csv(data,"data/output/web_scraping/web_scrape_v2_diff.csv", na="", row.names =F)
