@@ -1,6 +1,6 @@
 FROM rocker/rstudio:3.3.3		
 
-RUN R -e 'install.packages("devtools", "1.13.5")'
+RUN R -e 'install.packages("devtools")'
 
 
 RUN R -e 'library(devtools); \
