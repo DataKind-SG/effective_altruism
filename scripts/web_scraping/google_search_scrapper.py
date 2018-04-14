@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import pandas as pd
 import requests
+import math
 
 source_csv = 'changemakers_indonesia_bef_google.csv'
 target_csv = 'changemakers_indonesia.csv'
@@ -13,9 +14,19 @@ if 'address' not in result_file.columns:
 if 'contact_number' not in result_file.columns:
     result_file['contact_number'] = ''
 
+if 'lat' not in result_file.columns:
+    result_file['lat'] = ''
+
+if 'long' not in result_file.columns:
+    result_file['long'] = ''
+
 address_counter = 0
 tel_counter = 0
-for i in range(result_file['name'].shape[0]):
+lat_long_counter = 0
+for i in range(result_file.shape[0]):
+    if not isinstance(result_file.ix[i]['address'], str) and not isinstance(result_file.ix[i]['contact_number'], str):
+        continue
+
     print('processing:' + str(i))
     ngo_name = result_file['name'][i]
     search_result_page = requests.get('https://www.google.com/search?q=' + ngo_name.replace(' ', '%20'))
@@ -37,6 +48,17 @@ for i in range(result_file['name'].shape[0]):
                 result_file.set_value(i, 'contact_number', each_span.text)
                 tel_counter+=1
 
-print('address_counter:' + str(address_counter) + ' tel_counter:' + str(tel_counter))
+    div_list = search_result_soup.find_all('div')
+    for each_div in div_list:
+        if 'R8KuR' in each_div.get_attribute_list('class'):
+            maps_href = each_div.a.get('href')
+            lat_long_list = maps_href[maps_href.find('ll=')+3:maps_href.find('&z')].split(',')
+            result_file.set_value(i, 'lat', lat_long_list[0])
+            result_file.set_value(i, 'long', lat_long_list[1])
+            lat_long_counter+=1
+
+print('address_counter:' + str(address_counter))
+print('tel_counter:' + str(tel_counter))
+print('lat_long_counter:' + lat_long_counter)
 
 result_file.to_csv(target_csv)
