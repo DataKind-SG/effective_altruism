@@ -22,7 +22,7 @@ class CauseAreaClassifier:
         web_scrape = self.score_based_on_cause_area(web_scrape, cause_area)
         web_scrape = self.add_number_of_cause_areas_per_organization(web_scrape, cause_area)
 
-        web_scrape.to_csv(WEB_SCRAPE_IMPUTED_CAUSE_AREAS_CSV)
+        web_scrape.to_csv(WEB_SCRAPE_IMPUTED_CAUSE_AREAS_CSV, encoding='ISO-8859-1')
 
     def read_cause_area(self):
         list_cause_areas = self.read_from_csv(CAUSE_AREA_CSV).to_dict(orient='records')
@@ -36,9 +36,9 @@ class CauseAreaClassifier:
             return keywords_filtered
 
         cause_areas = {
-            item["Causes/ Columns"]: {
-                'keywords': item["Keywords"],
-                'keywords_list': keywords_to_list(item["Keywords"])
+            item['Causes/ Columns']: {
+                'keywords': item['Keywords'],
+                'keywords_list': keywords_to_list(item['Keywords'])
             }
             for item in list_cause_areas
         }
@@ -73,11 +73,11 @@ class CauseAreaClassifier:
 
     def add_fields_to_web_scrape(self, df):
         def add_cleaned_org_description():
-            clean_and_stemmed = self.generate_clean_and_stemmed(df["description"].fillna("").values)
+            clean_and_stemmed = self.generate_clean_and_stemmed(df['description'].fillna('').values)
 
-            df["description_cleaned"] = \
+            df['description_cleaned'] = \
                 pd.Series(clean_and_stemmed['descriptions']).values
-            df["description_cleaned_set"] = \
+            df['description_cleaned_set'] = \
                 pd.Series(clean_and_stemmed['descriptions_set']).values
 
         add_cleaned_org_description()
@@ -139,7 +139,7 @@ class CauseAreaClassifier:
 
             lemmatized_keywords.append(set(important_words))
 
-            sentence = " ".join(important_words)
+            sentence = ' '.join(important_words)
             lemmatized_descriptions.append(sentence)
 
         return {
