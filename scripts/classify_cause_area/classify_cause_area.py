@@ -20,6 +20,7 @@ class CauseAreaClassifier:
         web_scrape = self.add_fields_to_web_scrape(web_scrape)
 
         web_scrape = self.score_based_on_cause_area(web_scrape, cause_area)
+        web_scrape = self.add_number_of_cause_areas_per_organization(web_scrape, cause_area)
 
         web_scrape.to_csv(WEB_SCRAPE_IMPUTED_CAUSE_AREAS_CSV)
 
@@ -107,6 +108,20 @@ class CauseAreaClassifier:
                     df['description_cleaned_set'], keywords_set)
 
         do_scoring()
+
+        return df
+
+    @staticmethod
+    def add_number_of_cause_areas_per_organization(df, cause_area_dict):
+        df['cause_area_count'] = 0
+
+        for cause_area_name in cause_area_dict.keys():
+            column_name = 'cause_area_' + cause_area_name
+
+            specific_cause_area_count = df[column_name]
+            specific_cause_area_count = (specific_cause_area_count > 0).astype(int)
+
+            df['cause_area_count'] = df['cause_area_count'] + specific_cause_area_count
 
         return df
 
