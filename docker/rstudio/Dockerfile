@@ -1,7 +1,7 @@
 FROM rocker/rstudio:3.3.3
 
 RUN sudo apt-get update && \
-    sudo apt-get install -y --no-install-recommends libjpeg-dev && \
+    sudo apt-get install -y --no-install-recommends libjpeg-dev libpng-dev && \
     sudo apt-get clean && \
     sudo rm -rf /var/lib/apt/lists/*
 
