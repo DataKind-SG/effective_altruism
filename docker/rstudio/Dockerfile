@@ -42,3 +42,6 @@ RUN R -e 'library(devtools); \
 
 RUN R -e 'library(devtools); \
           install_version("shinythemes", "1.1.1", repos = "http://cran.us.r-project.org");'
+
+RUN R -e 'library(devtools); \
+          install_version("bit64", "0.9-7", repos = "http://cran.us.r-project.org");'
