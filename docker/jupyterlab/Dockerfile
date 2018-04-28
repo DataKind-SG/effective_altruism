@@ -1,6 +1,4 @@
-# minimal-notebook image as of 20180402
-FROM jupyter/minimal-notebook:8d9388cac562
-
+FROM quay.io/dksg/ea-jupyterlab:1.0.0
 # make sure apt is up to date
 USER root
 RUN apt-get update && apt-get install -y --no-install-recommends \
