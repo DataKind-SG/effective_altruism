@@ -41,5 +41,4 @@ RUN R -e 'library(devtools); \
           install_version("stringdist", "0.9.4.7", repos = "http://cran.us.r-project.org");'
 
 RUN R -e 'library(devtools); \
-          install_version("shinythemes", "1.1.1, repos = "http://cran.us.r-project.org");'
-          
+          install_version("shinythemes", "1.1.1", repos = "http://cran.us.r-project.org");'
