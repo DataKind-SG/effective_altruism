@@ -14,7 +14,7 @@ region_code_for_number,
 )
 
 def cleanwebscrape(data):
-    df = pd.read_csv(data,encoding = "ISO-8859-1")
+    df = pd.read_csv(data,encoding = "UTF-8", error_bad_lines=False)
 
     df = df.fillna(" ")
     df['id'] = df.index.values
