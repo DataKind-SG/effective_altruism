@@ -43,3 +43,7 @@ def get_word_counts(descriptions_list):
 
 def read_from_csv(csv_path, encoding='ISO-8859-1'):
     return pd.read_csv(csv_path, encoding=encoding)
+
+
+def get_distinct_words(word_counts_list):
+    return [set(word_counts_dict.keys()) for word_counts_dict in word_counts_list]

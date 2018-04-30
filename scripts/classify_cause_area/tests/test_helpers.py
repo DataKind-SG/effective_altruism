@@ -82,3 +82,17 @@ class ReadFromCSVTest(unittest.TestCase):
         feat.read_from_csv('some-csv-path', encoding='UTF-8')
 
         mock_pandas.read_csv.assert_called_with('some-csv-path', encoding='UTF-8')
+
+
+class GetDistinctWordsTest(unittest.TestCase):
+    def test_should_get_distinct_words(self):
+        word_counts_list = [
+            {"this": 1, "is": 1, "a": 1, "sentence": 1},
+            {"this": 3, "is": 1, "a": 1, "sentence": 1, "with": 1, "many": 1},
+        ]
+
+        expected_result = [
+            {"this", "is", "a", "sentence"},
+            {"this", "is", "a", "sentence", "with", "many"},
+        ]
+        self.assertEqual(feat.get_distinct_words(word_counts_list), expected_result)
