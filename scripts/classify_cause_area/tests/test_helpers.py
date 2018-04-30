@@ -1,6 +1,8 @@
 import unittest
 import unittest.mock as mock
 
+import pandas as pd
+
 import scripts.classify_cause_area.helpers as feat
 
 
@@ -110,3 +112,18 @@ class GetSentenceFromList(unittest.TestCase):
             "sentence punctuations"
         ]
         self.assertEqual(feat.get_sentence_from_list(list_of_list_of_words), expected_result)
+
+
+class AddColumnsToDF(unittest.TestCase):
+    def test_should_add_new_columns(self):
+        new_columns = ['col1', 'col2']
+
+        df = pd.DataFrame([
+            {'name': 'george'},
+            {'name': 'adam'}
+        ])
+        result_df = feat.add_columns_to_df(df, new_columns, 'new_', 'default-value')
+
+        self.assertTrue('new_col1' in result_df)
+        self.assertTrue('new_col2' in result_df)
+        self.assertEqual(result_df['new_col1'].tolist(), ['default-value', 'default-value'])

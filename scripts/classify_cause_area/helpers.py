@@ -51,3 +51,10 @@ def get_distinct_words(word_counts_list):
 
 def get_sentence_from_list(list_of_list_of_words):
     return [' '.join(list_of_words) for list_of_words in list_of_list_of_words]
+
+
+def add_columns_to_df(df, column_names_list, new_columns_prefix, default_value):
+    for column_name in column_names_list:
+        df[new_columns_prefix+column_name] = default_value
+
+    return df
