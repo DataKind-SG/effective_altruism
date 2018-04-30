@@ -1,7 +1,7 @@
 import unittest
 import unittest.mock as mock
 
-import scripts.classify_cause_area.feature_generation as feat
+import scripts.classify_cause_area.helpers as feat
 
 
 class GetDescriptionsWithoutStopwordsTest(unittest.TestCase):
