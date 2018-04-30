@@ -71,13 +71,13 @@ class GetWordCounts(unittest.TestCase):
 
 
 class ReadFromCSVTest(unittest.TestCase):
-    @mock.patch('scripts.classify_cause_area.feature_generation.pd')
+    @mock.patch('scripts.classify_cause_area.helpers.pd')
     def test_should_read_from_csv(self, mock_pandas):
         feat.read_from_csv('some-csv-path')
 
         mock_pandas.read_csv.assert_called_with('some-csv-path', encoding='ISO-8859-1')
 
-    @mock.patch('scripts.classify_cause_area.feature_generation.pd')
+    @mock.patch('scripts.classify_cause_area.helpers.pd')
     def test_should_read_from_csv_with_set_encoding(self, mock_pandas):
         feat.read_from_csv('some-csv-path', encoding='UTF-8')
 
