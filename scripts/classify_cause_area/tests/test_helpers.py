@@ -96,3 +96,17 @@ class GetDistinctWordsTest(unittest.TestCase):
             {"this", "is", "a", "sentence", "with", "many"},
         ]
         self.assertEqual(feat.get_distinct_words(word_counts_list), expected_result)
+
+
+class GetSentenceFromList(unittest.TestCase):
+    def test_should_generate_sentences_from_list_of_list_of_words(self):
+        list_of_list_of_words = [
+            ["sentence"],
+            ["sentence", "punctuations"],
+        ]
+
+        expected_result = [
+            "sentence",
+            "sentence punctuations"
+        ]
+        self.assertEqual(feat.get_sentence_from_list(list_of_list_of_words), expected_result)

@@ -47,3 +47,7 @@ def read_from_csv(csv_path, encoding='ISO-8859-1'):
 
 def get_distinct_words(word_counts_list):
     return [set(word_counts_dict.keys()) for word_counts_dict in word_counts_list]
+
+
+def get_sentence_from_list(list_of_list_of_words):
+    return [' '.join(list_of_words) for list_of_words in list_of_list_of_words]
