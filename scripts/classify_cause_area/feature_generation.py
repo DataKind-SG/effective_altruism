@@ -1,3 +1,4 @@
+import pandas as pd
 import spacy
 
 
@@ -38,3 +39,7 @@ def get_word_counts(descriptions_list):
         return word_count_dict
 
     return [do_word_count(word_list) for word_list in descriptions_list]
+
+
+def read_from_csv(csv_path, encoding='ISO-8859-1'):
+    return pd.read_csv(csv_path, encoding=encoding)
