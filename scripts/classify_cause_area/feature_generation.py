@@ -23,3 +23,18 @@ def get_cleaned_descriptions(descriptions_list, remove_stopwords=True,
         cleaned_descriptions.append(important_words)
 
     return cleaned_descriptions
+
+
+def get_word_counts(descriptions_list):
+    def do_word_count(word_list):
+        word_count_dict = {}
+
+        for word in word_list:
+            if word not in word_count_dict:
+                word_count_dict[word] = 1
+                continue
+            word_count_dict[word] = word_count_dict[word] + 1
+
+        return word_count_dict
+
+    return [do_word_count(word_list) for word_list in descriptions_list]

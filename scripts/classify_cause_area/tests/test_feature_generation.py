@@ -19,7 +19,7 @@ class GetDescriptionsWithoutStopwordsTest(unittest.TestCase):
         ]
         result = feat.get_cleaned_descriptions(self.descriptions_list)
 
-        self.assertCountEqual(result, expected_result)
+        self.assertEqual(result, expected_result)
 
     def test_should_generate_descriptions_with_stopwords(self):
         expected_result = [
@@ -48,5 +48,22 @@ class GetDescriptionsWithoutStopwordsTest(unittest.TestCase):
             ["sentence", "lemmas", "cook", "cook", "cook"]
         ]
         result = feat.get_cleaned_descriptions(self.descriptions_list, remove_punctuations=False)
+
+        self.assertEqual(result, expected_result)
+
+
+class GetWordCounts(unittest.TestCase):
+    def setUp(self):
+        self.descriptions_list = [
+            ["this", "is", "a", "sentence"],
+            ["this", "is", "a", "sentence", "with", "many", "this", "this"]
+        ]
+
+    def test_should_generate_word_counts(self):
+        expected_result = [
+            {"this": 1, "is": 1, "a": 1, "sentence": 1},
+            {"this": 3, "is": 1, "a": 1, "sentence": 1, "with": 1, "many": 1},
+        ]
+        result = feat.get_word_counts(self.descriptions_list)
 
         self.assertEqual(result, expected_result)
