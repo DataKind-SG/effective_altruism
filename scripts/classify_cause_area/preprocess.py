@@ -1,17 +1,17 @@
 from scripts.classify_cause_area.helpers \
     import get_cleaned_descriptions, get_sentence_from_list, \
-    get_word_counts, get_distinct_words, read_from_csv, remove_rows_with_null_or_empty
+    get_word_counts, get_distinct_words, read_from_csv
 
 DATA_PATH = '../../data'
 
-WEB_SCRAPE_CSV = DATA_PATH + '/output/web_scraping/web_scrape_v1_trunc.csv'
-CAUSE_AREA_CSV = DATA_PATH + '/input/cause_area/cause_area.csv'
+WEB_SCRAPE_CSV = DATA_PATH + '/output/web_scraping/web_scrape_v3.csv'
+CAUSE_AREA_CSV = DATA_PATH + '/input/classification_keywords/classification_keywords.csv'
 
 WEB_SCRAPE_PREPROCESSED = DATA_PATH + '/output/classify_cause_area/web_scrape_preprocessed'
 CAUSE_AREA_PREPROCESSED = DATA_PATH + '/output/classify_cause_area/cause_area_preprocessed'
 
 WEB_SCRAPE_DESCRIPTION_COLUMN_NAME = 'description'
-CAUSE_AREA_KEYWORDS_COLUMN_NAME = 'Keywords'
+CAUSE_AREA_KEYWORDS_COLUMN_NAME = 'Keywords_Set 1'
 
 
 class Preprocess:

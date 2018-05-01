@@ -30,7 +30,7 @@ class KeywordCounts:
 
         # add cause_area
         cause_areas = list(cause_area_df['Causes/ Columns'].dropna())
-        web_scrape_df = add_columns_to_df(web_scrape_df, cause_areas, 'cause_area_', 0)
+        web_scrape_df = add_columns_to_df(web_scrape_df, cause_areas, 'ca_', 0)
 
         # do scoring
         web_scrape_df = self.score_by_keyword_count(web_scrape_df, cause_area_df)
@@ -40,7 +40,7 @@ class KeywordCounts:
         web_scrape_df = self.add_cause_areas_per_organization(web_scrape_df, cause_areas)
 
         # save to csv
-        web_scrape_df.to_csv(WEB_SCRAPE_IMPUTED_CAUSE_AREAS + ".csv")
+        web_scrape_df.to_csv(WEB_SCRAPE_IMPUTED_CAUSE_AREAS + ".csv", index=False)
         web_scrape_df.to_pickle(WEB_SCRAPE_IMPUTED_CAUSE_AREAS + ".pl")
 
     @staticmethod
@@ -72,7 +72,7 @@ class KeywordCounts:
             cause_area_scores = compute_org_score_by_cause_area(
                 web_scrape_df['description_counts'],
                 keywords_set)
-            web_scrape_df['cause_area_' + cause_area_name] = cause_area_scores
+            web_scrape_df['ca_' + cause_area_name] = cause_area_scores
 
         return web_scrape_df
 
@@ -81,7 +81,7 @@ class KeywordCounts:
         df['cause_area_count'] = 0
 
         for cause_area_name in cause_areas_list:
-            column_name = 'cause_area_' + cause_area_name
+            column_name = 'ca_' + cause_area_name
 
             specific_cause_area_count = df[column_name]
             specific_cause_area_count = (specific_cause_area_count > 0).astype(int)
@@ -95,7 +95,7 @@ class KeywordCounts:
         df['cause_areas_imputed'] = ''
 
         for cause_area_name in cause_areas_list:
-            column_name = 'cause_area_' + cause_area_name
+            column_name = 'ca_' + cause_area_name
 
             matched_rows = df[column_name]
             matched_rows = matched_rows.apply(lambda x: cause_area_name + ', ' if x > 0 else "")
