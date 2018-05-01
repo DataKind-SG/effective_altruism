@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 from bs4 import BeautifulSoup
 import pandas as pd
 import requests
@@ -10,11 +12,7 @@ import os.path as path
 source_csv = path.abspath(path.join("../..","data/output/web_scraping/web_scrape_cleaned.csv"))
 target_csv = path.abspath(path.join("../..","data/output/web_scraping/web_scrape_cleaned_aft_google.csv"))
 
-
-# source_csv = 'wikiwand_thailand.csv'
-# target_csv = 'wikiwand_thailand1.csv'
-
-result_file = pd.read_csv(source_csv,  encoding="latin-1")
+result_file = pd.read_csv(source_csv,  encoding="utf-8", na_values = " ")
 
 if 'address_google' not in result_file.columns:
     result_file['address_google'] = ''
@@ -33,9 +31,16 @@ tel_counter = 0
 lat_long_counter = 0
 
 for i in range(result_file.shape[0]):
-    # if not isinstance(result_file.ix[i]['address'], str) and not isinstance(result_file.ix[i]['contact_number'], str):
+    # if not isinstance(result_file.iloc[i]['address'], str) and not isinstance(result_file.iloc[i]['contact_number'], str):
     #     continue
-    ngo_name = result_file['name'][i] + " " + result_file['country'][i]
+    if pd.isnull(result_file['name'][i]) == True:
+        print(str(i), 'skipped as name is blank')
+        continue
+    
+    if pd.isnull(result_file['country'][i]) == True:
+        ngo_name = str(result_file['name'][i]) 
+    else:
+        ngo_name = str(result_file['name'][i]) + str(" ") + str(result_file['country'][i])
 
     if not isinstance(ngo_name, str):
         continue
@@ -89,7 +94,7 @@ for i in range(result_file.shape[0]):
                             continue
                         lat_long_list = maps_href[maps_href.find('ll=')+3:maps_href.find('&z')].split(',')
                         result_file.set_value(i, 'lat', lat_long_list[0])
-                        result_file.set_value(i, 'long', lat_long_list[1])
+                        result_file.set_value(i, 'lon', lat_long_list[1])
                         lat_long_counter+=1
                         found = True
 
@@ -107,9 +112,9 @@ for i in range(result_file.shape[0]):
 
     # save every 1000 records
     if i % 1000 == 0:
-        result_file.to_csv(target_csv, index = False)
+        result_file.to_csv(target_csv, index = False, encoding = "utf-8")
 
-result_file.to_csv(target_csv, index = False)
+result_file.to_csv(target_csv, index = False, encoding = "utf-8")
 print('address_counter:' + str(address_counter))
 print('tel_counter:' + str(tel_counter))
 print('lat_long_counter:' + str(lat_long_counter))

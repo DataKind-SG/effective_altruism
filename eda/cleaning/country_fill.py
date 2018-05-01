@@ -14,7 +14,7 @@ region_code_for_number,
 )
 
 def cleanwebscrape(data):
-    df = pd.read_csv(data,encoding = "UTF-8", error_bad_lines=False)
+    df = pd.read_csv(data,encoding = "ISO-8859-1")
 
     df = df.fillna(" ")
     df['id'] = df.index.values
@@ -105,4 +105,4 @@ export_path =  path.abspath(path.join("../..","data/output/web_scraping/web_scra
 df = cleanwebscrape(path)
 df = rm_non_SEA_cty(df)
 
-df.to_csv(export_path, index = False)
+df.to_csv(export_path, index = False, encoding = "utf-8")
