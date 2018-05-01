@@ -55,6 +55,13 @@ def get_sentence_from_list(list_of_list_of_words):
 
 def add_columns_to_df(df, column_names_list, new_columns_prefix, default_value):
     for column_name in column_names_list:
-        df[new_columns_prefix+column_name] = default_value
+        df[new_columns_prefix + column_name] = default_value
+
+    return df
+
+
+def remove_rows_with_null_or_empty(df, column_name):
+    df[column_name] = df[column_name].replace('', pd.np.nan)
+    df = df[pd.notnull(df[column_name])]
 
     return df

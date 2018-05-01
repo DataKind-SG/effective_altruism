@@ -127,3 +127,17 @@ class AddColumnsToDF(unittest.TestCase):
         self.assertTrue('new_col1' in result_df)
         self.assertTrue('new_col2' in result_df)
         self.assertEqual(result_df['new_col1'].tolist(), ['default-value', 'default-value'])
+
+
+class RemoveRowsWithNullOrEmpty(unittest.TestCase):
+    def test_should_remove_rows_with_null_or_empty(self):
+        df = pd.DataFrame([
+            {'name': 'george'},
+            {'name': 'adam', 'description': ''},
+            {'name': 'keith', 'description': 'some-description'}
+        ])
+        filtered_df = feat.remove_rows_with_null_or_empty(df, 'description')
+
+        self.assertEqual(len(filtered_df), 1)
+        self.assertEqual(filtered_df['name'].tolist(), ['keith'])
+        self.assertEqual(filtered_df['description'].tolist(), ['some-description'])
