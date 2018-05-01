@@ -22,7 +22,7 @@ class Preprocess:
         web_scrape = self.add_cleaned_text_field(web_scrape, WEB_SCRAPE_DESCRIPTION_COLUMN_NAME,
                                                  'description')
 
-        web_scrape.to_csv(WEB_SCRAPE_PREPROCESSED_CSV, encoding='ISO-8859-1')
+        web_scrape.to_csv(WEB_SCRAPE_PREPROCESSED_CSV, encoding='ISO-8859-1', index=False)
 
         cause_area = read_from_csv(CAUSE_AREA_CSV)
         cause_area[CAUSE_AREA_KEYWORDS_COLUMN_NAME] \
@@ -30,7 +30,7 @@ class Preprocess:
         cause_area = self.add_cleaned_text_field(cause_area, CAUSE_AREA_KEYWORDS_COLUMN_NAME,
                                                  'keywords')
 
-        cause_area.to_csv(CAUSE_AREA_PREPROCESSED_CSV, encoding='ISO-8859-1')
+        cause_area.to_csv(CAUSE_AREA_PREPROCESSED_CSV, encoding='ISO-8859-1', index=False)
 
     @staticmethod
     def add_cleaned_text_field(df, data_column, new_column_prefix):
