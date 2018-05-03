@@ -15,13 +15,13 @@ class CauseAreasScraped:
         cause_areas = self.split_cause_areas(cause_areas)
 
         cause_areas_unique = set(cause_areas)
+        cause_areas_series = pd.Series(cause_areas)
 
         print("Total cause_area entries: " + str(len(cause_areas)))
         print("Unique entries: " + str(len(cause_areas_unique)))
 
         print("=== Cause Areas ===")
-        for cause_area in cause_areas_unique:
-            print(cause_area)
+        print(cause_areas_series.value_counts())
 
     @staticmethod
     def split_cause_areas(cause_areas_list):
