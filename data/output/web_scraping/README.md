@@ -1,6 +1,6 @@
 # Data Files
 
-As many people were working on these files, there are several copies of them at different stages of it's life.\
+As many people were working on these files, there are several copies of them at different stages of it's life. In sequential order:
 
 web_scrape_v3.csv --> combination of all the web scraping efforts\
 web_scrape_cleaned.csv --> cleaned the country column\
