@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from bs4 import BeautifulSoup
 import pandas as pd
+import numpy as np
 import requests
 import math
 import time
@@ -23,8 +24,8 @@ if 'contact_number_google' not in result_file.columns:
 if 'lat' not in result_file.columns:
     result_file['lat'] = ''
 
-if 'long' not in result_file.columns:
-    result_file['long'] = ''
+if 'lon' not in result_file.columns:
+    result_file['lon'] = ''
 
 address_counter = 0
 tel_counter = 0
@@ -113,6 +114,21 @@ for i in range(result_file.shape[0]):
     # save every 1000 records
     if i % 1000 == 0:
         result_file.to_csv(target_csv, index = False, encoding = "utf-8")
+
+result_file['address'] = result_file['address'].replace('Nan', np.NaN)
+
+# set all address as google values
+# set blank contact numbers as google contact numbers
+# drop address_google, contact_num_google
+result_file.loc[
+        (result_file['address_google'].notnull()), 
+        ['address']] = result_file['address_google']
+
+result_file.loc[
+        (result_file['contact_number'].isnull()),
+        ['contact_number']] = result_file['contact_number_google']
+
+result_file.drop(['location','address_google','contact_number_google'], axis = 1, inplace = True)
 
 result_file.to_csv(target_csv, index = False, encoding = "utf-8")
 print('address_counter:' + str(address_counter))
