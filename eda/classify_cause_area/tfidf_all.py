@@ -24,7 +24,8 @@ class TfIdfAll:
 
         print('org descriptions: all - top ' + str(N_TOP_TERMS) + ' terms')
         print('================')
-        print(",".join(top_terms))
+        for term in top_terms:
+            print(term)
 
     @staticmethod
     def get_top_terms(count_vect, tfidf_transformer, n):
