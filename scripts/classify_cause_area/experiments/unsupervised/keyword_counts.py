@@ -105,4 +105,5 @@ class KeywordCounts:
         return df
 
 
-KeywordCounts().start()
+if __name__ == "__main__":
+    KeywordCounts().start()

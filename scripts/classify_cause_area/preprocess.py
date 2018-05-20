@@ -46,4 +46,5 @@ class Preprocess:
         return df
 
 
-Preprocess().start()
+if __name__ == "__main__":
+    Preprocess().start()

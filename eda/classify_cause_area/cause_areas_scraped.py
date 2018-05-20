@@ -97,4 +97,5 @@ class CauseAreasScraped:
         return web_scrape_df[cause_area_unique_column_name].apply(generate_lemmatized_set)
 
 
-CauseAreasScraped().start()
+if __name__ == "__main__":
+    CauseAreasScraped().start()

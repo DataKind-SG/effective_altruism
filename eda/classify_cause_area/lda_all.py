@@ -70,4 +70,5 @@ class LdaAll:
             print('')
 
 
-LdaAll().start()
+if __name__ == "__main__":
+    LdaAll().start()

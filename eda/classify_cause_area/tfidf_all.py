@@ -36,4 +36,5 @@ class TfIdfAll:
         return top_features
 
 
-TfIdfAll().start()
+if __name__ == "__main__":
+    TfIdfAll().start()
