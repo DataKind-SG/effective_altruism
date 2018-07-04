@@ -28,3 +28,20 @@ RUN R -e 'library(devtools); \
 RUN R -e 'library(devtools); \
           install_version("ggmap", "2.6.1", repos = "http://cran.us.r-project.org");'
 
+RUN R -e 'library(devtools); \
+          install_version("RCurl", "1.95-4.10", repos = "http://cran.us.r-project.org");'
+
+RUN R -e 'library(devtools); \
+          install_version("jsonlite", "1.5", repos = "http://cran.us.r-project.org");'
+
+RUN R -e 'library(devtools); \
+          install_version("fields", "9.6", repos = "http://cran.us.r-project.org");'
+
+RUN R -e 'library(devtools); \
+          install_version("stringdist", "0.9.4.7", repos = "http://cran.us.r-project.org");'
+
+RUN R -e 'library(devtools); \
+          install_version("shinythemes", "1.1.1", repos = "http://cran.us.r-project.org");'
+
+RUN R -e 'library(devtools); \
+          install_version("bit64", "0.9-7", repos = "http://cran.us.r-project.org");'
