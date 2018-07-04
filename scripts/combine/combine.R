@@ -1,4 +1,5 @@
 library(data.table)
+library(readr)
 
 #List the directory which contains all the csv files
 setwd("../..")
@@ -9,7 +10,7 @@ columns = c("name","description","website","cause_area","programme_types","addre
 
 #Read each file and check if the column names are all acceptable names and bind them together
 data = rbindlist(lapply(list.files(file_dir), function(i){
-  x=read.csv(paste(file_dir, "/", i, sep = ""), stringsAsFactors = F)
+  x=read_csv(paste(file_dir, "/", i, sep = ""))
   
   if (all(colnames(x) %in% columns) == F) {
     print(i)
@@ -22,7 +23,8 @@ data = rbindlist(lapply(list.files(file_dir), function(i){
   x
 }), fill = T)
 
-data[,c("X","Unnamed..0","X.1","X.2","X.3") := NULL]
+colnames(data) = make.names(colnames(data))
+data[,c("X1","Unnamed..0","X12","X10","X11","X13","X5","X6","X7") := NULL]
 
 #export data file
-write.csv(data,"data/output/web_scraping/web_scrape_v3.csv", na="", row.names =F)
+fwrite(data,"data/output/web_scraping/web_scrape_v3.csv", row.names =F)
