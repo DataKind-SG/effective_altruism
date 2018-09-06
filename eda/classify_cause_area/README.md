@@ -1,16 +1,24 @@
 # EDA Task: Cause Area Classification    
-### Intent/Purpose    
-This task aims to load the consolidated webscraped CSV file and programmatically generate a new CSV file with a new column (i.e. assigned_cause_area) based on keywords assigned in the cause_keyword_mapping.csv file. 
+### Intent
+Generate cause area/program classification based on organization descriptions & cause area labels
 
+Data utilized
+- Organization details (from web scraping)
+- Cause area and relevant keywords (from EA team)
+
+### Table of Contents
+Explore the notebooks to learn more about the findings and methodology.
+1. preprocess: ingesting/cleaning up of web data and EA team's keywords
+2. classification: impute cause area from organization descriptions
+(more to come)
 
 ### Author/s
-Write your name/s here
+Effective Altruism Team
+- Wanyi
+- Pooja
+- Yadanar
 
-### Usage    
-1. place instructions here on how to reproduce the analysis/visualization (i.e. how to generate the output CSV, etc) 
-
-
-#### Docker Captains Meta Data:    
-Reproduced using: Place Docker Environment version used here:    
-e.g. quay.io/dksg/ea-jupyterlab:1.0.0    
-Reproduced By: name of docker captain
+DataKind
+- Gibson (nossbigg)
+- Kelvin (kelvnt)
+- Paul (whatevergeek)
