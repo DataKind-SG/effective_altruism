@@ -1,4 +1,4 @@
-from scripts.classify_cause_area.helpers \
+from eda.classify_cause_area.helpers \
     import get_cleaned_descriptions, get_sentence_from_list, \
     get_word_counts, get_distinct_words, read_from_csv
 

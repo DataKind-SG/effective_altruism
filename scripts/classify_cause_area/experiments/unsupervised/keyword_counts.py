@@ -1,6 +1,6 @@
 import pandas as pd
 
-from scripts.classify_cause_area.helpers import add_columns_to_df, \
+from eda.classify_cause_area.helpers import add_columns_to_df, \
     remove_rows_with_null_or_empty
 
 DATA_PATH = '../../../../data'
