@@ -3,7 +3,7 @@ import unittest.mock as mock
 
 import pandas as pd
 
-import scripts.classify_cause_area.helpers as feat
+import eda.classify_cause_area.helpers as feat
 
 
 class GetDescriptionsWithoutStopwordsTest(unittest.TestCase):
