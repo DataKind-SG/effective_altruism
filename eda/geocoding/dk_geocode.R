@@ -220,10 +220,10 @@ gc_dt = rbindlist(list(dt_1_to_1000,
                        dt_12001_to_13000,
                        dt_13001_to_14000,
                        dt_14001_to_14847))
-
+gc_dt[, key := .I]
 write.csv(gc_dt, 
-          "data/output/web_scraping/web_scrape_geocoded.csv", 
-          row.names = F, 
+          "data/output/web_scraping/web_scrape_geocoded.csv",
+          row.names = F,
           fileEncoding = "UTF-8")
 # print(dt_1_to_55[,.(lat,lon)])
 
