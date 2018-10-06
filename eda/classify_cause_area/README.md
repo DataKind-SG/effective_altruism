@@ -12,6 +12,11 @@ Explore the notebooks to learn more about the findings and methodology.
 2. classification: impute cause area from organization descriptions
 (more to come)
 
+### Setup
+1. `pip install pipenv`
+2. `pipenv install`
+3. `pipenv run jupyter notebook
+
 ### Author/s
 Effective Altruism Team
 - Wanyi
