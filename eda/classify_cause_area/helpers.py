@@ -3,7 +3,7 @@ import spacy
 
 
 def get_cleaned_descriptions(descriptions_list, remove_stopwords=True,
-                             remove_punctuations=True, lemmatize_words=True):
+                             remove_punctuations=True, lemmatize_words=True, unique_words=False):
     cleaned_descriptions = []
     nlp = spacy.load('en', disable=['parser', 'tagger', 'ner'])
 
@@ -22,6 +22,9 @@ def get_cleaned_descriptions(descriptions_list, remove_stopwords=True,
         ]
 
         cleaned_descriptions.append(important_words)
+
+    if unique_words:
+        cleaned_descriptions = [list(set(word_list)) for word_list in cleaned_descriptions]
 
     return cleaned_descriptions
 

@@ -54,6 +54,16 @@ class GetDescriptionsWithoutStopwordsTest(unittest.TestCase):
 
         self.assertEqual(result, expected_result)
 
+    def test_should_generate_descriptions_with_unique_words(self):
+        expected_result = [
+            ["sentence"],
+            ["sentence", "punctuations"],
+            ["sentence", "lemmas", "cook"]
+        ]
+        result = feat.get_cleaned_descriptions(self.descriptions_list, unique_words=True)
+
+        self.assertEqual(result, expected_result)
+
 
 class GetWordCounts(unittest.TestCase):
     def setUp(self):
