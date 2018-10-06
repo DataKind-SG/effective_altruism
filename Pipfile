@@ -10,8 +10,15 @@ ipykernel = "5.0.0"
 jupyter = "1.0.0"
 matplotlib = "3.0.0"
 scikit-learn = "0.20.0"
+pytest = "3.8.2"
+pytest-watch = "4.2.0"
 
 [dev-packages]
 
 [requires]
 python_version = "3.6"
+
+[scripts]
+notebook = "jupyter notebook"
+test = "pytest eda/classify_cause_area"
+test-watch = "ptw eda/classify_cause_area"
