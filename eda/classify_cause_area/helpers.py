@@ -3,7 +3,8 @@ import spacy
 
 
 def get_cleaned_descriptions(descriptions_list, remove_stopwords=True,
-                             remove_punctuations=True, lemmatize_words=True, unique_words=False):
+                             remove_punctuations=True, lemmatize_words=True,
+                             unique_words=False):
     cleaned_descriptions = []
     nlp = spacy.load('en', disable=['parser', 'tagger', 'ner'])
 
@@ -24,7 +25,8 @@ def get_cleaned_descriptions(descriptions_list, remove_stopwords=True,
         cleaned_descriptions.append(important_words)
 
     if unique_words:
-        cleaned_descriptions = [list(set(word_list)) for word_list in cleaned_descriptions]
+        cleaned_descriptions = [list(set(word_list))
+                                for word_list in cleaned_descriptions]
 
     return cleaned_descriptions
 
@@ -49,14 +51,16 @@ def read_from_csv(csv_path, encoding='ISO-8859-1'):
 
 
 def get_distinct_words(word_counts_list):
-    return [set(word_counts_dict.keys()) for word_counts_dict in word_counts_list]
+    return [set(word_counts_dict.keys())
+            for word_counts_dict in word_counts_list]
 
 
 def get_sentence_from_list(list_of_list_of_words):
     return [' '.join(list_of_words) for list_of_words in list_of_list_of_words]
 
 
-def add_columns_to_df(df, column_names_list, new_columns_prefix, default_value):
+def add_columns_to_df(df, column_names_list,
+                      new_columns_prefix, default_value):
     for column_name in column_names_list:
         df[new_columns_prefix + column_name] = default_value
 

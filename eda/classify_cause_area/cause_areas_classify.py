@@ -9,9 +9,11 @@ from sklearn.preprocessing import MultiLabelBinarizer
 import eda.classify_cause_area.cause_areas_scraped as cas
 
 DATA_PATH = '../../data'
-WEB_SCRAPE_PREPROCESSED = DATA_PATH + '/output/classify_cause_area/web_scrape_preprocessed'
+WEB_SCRAPE_PREPROCESSED = DATA_PATH + \
+    '/output/classify_cause_area/web_scrape_preprocessed'
 
-CAUSE_AREAS_INVESTIGATED = {'education', 'children', 'religious', 'health', 'environment'}
+CAUSE_AREAS_INVESTIGATED = {'education',
+                            'children', 'religious', 'health', 'environment'}
 
 TEST_SIZE = 0.1
 
@@ -28,8 +30,10 @@ class CauseAreasClassify:
 
         # create features and helper columns
         mlb = MultiLabelBinarizer()
-        df = self.add_cause_area_classifier_labels(df, CAUSE_AREAS_INVESTIGATED, mlb)
-        df = self.add_investigated_cause_areas_summary(df, CAUSE_AREAS_INVESTIGATED)
+        df = self.add_cause_area_classifier_labels(
+            df, CAUSE_AREAS_INVESTIGATED, mlb)
+        df = self.add_investigated_cause_areas_summary(
+            df, CAUSE_AREAS_INVESTIGATED)
         df = self.add_investigated_cause_columns(df, CAUSE_AREAS_INVESTIGATED)
         df = self.add_investigated_cause_counts(df, 'clf_labels')
 
@@ -40,7 +44,8 @@ class CauseAreasClassify:
 
         # remove orgs that do not fall in investigated cause areas
         df = df[df['investigated_cause_areas_count'] > 0]
-        print("orgs with at least one investigated cause area: " + str(len(df)))
+        print("orgs with at least one investigated cause area: "
+              + str(len(df)))
 
         # stratify data by cause areas
         df = self.do_train_test_stratify(df, CAUSE_AREAS_INVESTIGATED)
@@ -151,7 +156,8 @@ class CauseAreasClassify:
             rows_count = len(cause_area_rows)
             train_rows_count = math.floor(rows_count * TEST_SIZE)
 
-            test_rows = cause_area_rows.sample(n=train_rows_count, random_state=random_state)
+            test_rows = cause_area_rows.sample(
+                n=train_rows_count, random_state=random_state)
             test_rows_index = test_rows.index.values
 
             df.loc[test_rows_index, 'is_test'] = True
@@ -164,13 +170,16 @@ class CauseAreasClassify:
         df['tf_idf_feature'] = df['tf_idf_feature'].astype(object)
 
         train_rows = df[~df['is_test']]
-        x_train = tf_idf_vectorizer.fit_transform(train_rows['description_cleaned'])
-        for df_index, feature_vector in zip(train_rows.index.values, x_train.toarray().tolist()):
+        x_train = tf_idf_vectorizer.fit_transform(
+            train_rows['description_cleaned'])
+        for df_index, feature_vector in zip(train_rows.index.values,
+                                            x_train.toarray().tolist()):
             df.at[df_index, 'tf_idf_feature'] = feature_vector
 
         test_rows = df[df['is_test']]
         x_test = tf_idf_vectorizer.transform(test_rows['description_cleaned'])
-        for df_index, feature_vector in zip(test_rows.index.values, x_test.toarray().tolist()):
+        for df_index, feature_vector in zip(test_rows.index.values,
+                                            x_test.toarray().tolist()):
             df.at[df_index, 'tf_idf_feature'] = feature_vector
 
         return df

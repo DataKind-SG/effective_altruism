@@ -2,7 +2,8 @@ import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 
 DATA_PATH = '../../data'
-WEB_SCRAPE_PREPROCESSED = DATA_PATH + '/output/classify_cause_area/web_scrape_preprocessed'
+WEB_SCRAPE_PREPROCESSED = DATA_PATH + \
+    '/output/classify_cause_area/web_scrape_preprocessed'
 
 DESCRIPTION_COLUMN_NAME = 'description_cleaned'
 N_TOP_TERMS = 100
@@ -20,7 +21,8 @@ class TfIdfAll:
         tfidf_transformer = TfidfTransformer()
         X_train_tfidf = tfidf_transformer.fit_transform(X_train_counts)
 
-        top_terms = self.get_top_terms(count_vect, tfidf_transformer, N_TOP_TERMS)
+        top_terms = self.get_top_terms(
+            count_vect, tfidf_transformer, N_TOP_TERMS)
 
         print('org descriptions: all - top ' + str(N_TOP_TERMS) + ' terms')
         print('================')

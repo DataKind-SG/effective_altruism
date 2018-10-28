@@ -28,9 +28,11 @@ class GetDescriptionsWithoutStopwordsTest(unittest.TestCase):
         expected_result = [
             ["this", "be", "a", "sentence"],
             ["this", "be", "a", "sentence", "with", "punctuations"],
-            ["this", "be", "a", "sentence", "with", "lemmas", "cook", "cook", "cook"]
+            ["this", "be", "a", "sentence", "with",
+                "lemmas", "cook", "cook", "cook"]
         ]
-        result = feat.get_cleaned_descriptions(self.descriptions_list, remove_stopwords=False)
+        result = feat.get_cleaned_descriptions(
+            self.descriptions_list, remove_stopwords=False)
 
         self.assertEqual(result, expected_result)
 
@@ -40,7 +42,8 @@ class GetDescriptionsWithoutStopwordsTest(unittest.TestCase):
             ["sentence", "punctuations"],
             ["sentence", "lemmas", "cook", "cooking", "cooked"]
         ]
-        result = feat.get_cleaned_descriptions(self.descriptions_list, lemmatize_words=False)
+        result = feat.get_cleaned_descriptions(
+            self.descriptions_list, lemmatize_words=False)
 
         self.assertEqual(result, expected_result)
 
@@ -50,7 +53,8 @@ class GetDescriptionsWithoutStopwordsTest(unittest.TestCase):
             ["sentence", "punctuations", "!"],
             ["sentence", "lemmas", "cook", "cook", "cook"]
         ]
-        result = feat.get_cleaned_descriptions(self.descriptions_list, remove_punctuations=False)
+        result = feat.get_cleaned_descriptions(
+            self.descriptions_list, remove_punctuations=False)
 
         self.assertEqual(result, expected_result)
 
@@ -60,7 +64,8 @@ class GetDescriptionsWithoutStopwordsTest(unittest.TestCase):
             ["sentence", "punctuations"],
             ["sentence", "lemmas", "cook"]
         ]
-        result = feat.get_cleaned_descriptions(self.descriptions_list, unique_words=True)
+        result = feat.get_cleaned_descriptions(
+            self.descriptions_list, unique_words=True)
 
         self.assertEqual(result, expected_result)
 
@@ -87,13 +92,15 @@ class ReadFromCSVTest(unittest.TestCase):
     def test_should_read_from_csv(self, mock_pandas):
         feat.read_from_csv('some-csv-path')
 
-        mock_pandas.read_csv.assert_called_with('some-csv-path', encoding='ISO-8859-1')
+        mock_pandas.read_csv.assert_called_with(
+            'some-csv-path', encoding='ISO-8859-1')
 
     @mock.patch('eda.classify_cause_area.helpers.pd')
     def test_should_read_from_csv_with_set_encoding(self, mock_pandas):
         feat.read_from_csv('some-csv-path', encoding='UTF-8')
 
-        mock_pandas.read_csv.assert_called_with('some-csv-path', encoding='UTF-8')
+        mock_pandas.read_csv.assert_called_with(
+            'some-csv-path', encoding='UTF-8')
 
 
 class GetDistinctWordsTest(unittest.TestCase):
@@ -107,7 +114,8 @@ class GetDistinctWordsTest(unittest.TestCase):
             {"this", "is", "a", "sentence"},
             {"this", "is", "a", "sentence", "with", "many"},
         ]
-        self.assertEqual(feat.get_distinct_words(word_counts_list), expected_result)
+        self.assertEqual(feat.get_distinct_words(
+            word_counts_list), expected_result)
 
 
 class GetSentenceFromList(unittest.TestCase):
@@ -121,7 +129,8 @@ class GetSentenceFromList(unittest.TestCase):
             "sentence",
             "sentence punctuations"
         ]
-        self.assertEqual(feat.get_sentence_from_list(list_of_list_of_words), expected_result)
+        self.assertEqual(feat.get_sentence_from_list(
+            list_of_list_of_words), expected_result)
 
 
 class AddColumnsToDF(unittest.TestCase):
@@ -132,11 +141,13 @@ class AddColumnsToDF(unittest.TestCase):
             {'name': 'george'},
             {'name': 'adam'}
         ])
-        result_df = feat.add_columns_to_df(df, new_columns, 'new_', 'default-value')
+        result_df = feat.add_columns_to_df(
+            df, new_columns, 'new_', 'default-value')
 
         self.assertTrue('new_col1' in result_df)
         self.assertTrue('new_col2' in result_df)
-        self.assertEqual(result_df['new_col1'].tolist(), ['default-value', 'default-value'])
+        self.assertEqual(result_df['new_col1'].tolist(), [
+                         'default-value', 'default-value'])
 
 
 class RemoveRowsWithNullOrEmpty(unittest.TestCase):
@@ -150,4 +161,5 @@ class RemoveRowsWithNullOrEmpty(unittest.TestCase):
 
         self.assertEqual(len(filtered_df), 1)
         self.assertEqual(filtered_df['name'].tolist(), ['keith'])
-        self.assertEqual(filtered_df['description'].tolist(), ['some-description'])
+        self.assertEqual(filtered_df['description'].tolist(), [
+                         'some-description'])

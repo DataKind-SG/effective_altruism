@@ -3,7 +3,8 @@ from gensim import corpora
 from gensim.models import LdaModel
 
 DATA_PATH = '../../data'
-WEB_SCRAPE_PREPROCESSED = DATA_PATH + '/output/classify_cause_area/web_scrape_preprocessed'
+WEB_SCRAPE_PREPROCESSED = DATA_PATH + \
+    '/output/classify_cause_area/web_scrape_preprocessed'
 
 DESCRIPTION_COLUMN_NAME = 'description_cleaned'
 LDA_SCORE_THRESHOLD = 0.01
@@ -26,11 +27,14 @@ class LdaAll:
         descriptions_cleaned = list(web_scrape_df[DESCRIPTION_COLUMN_NAME])
 
         descriptions_cleaned_splitted = descriptions_cleaned
-        descriptions_cleaned_splitted = [d for d in descriptions_cleaned_splitted if len(d) > 0]
-        descriptions_cleaned_splitted = [d.split(' ') for d in descriptions_cleaned_splitted]
+        descriptions_cleaned_splitted = [
+            d for d in descriptions_cleaned_splitted if len(d) > 0]
+        descriptions_cleaned_splitted = [
+            d.split(' ') for d in descriptions_cleaned_splitted]
 
         dictionary = corpora.Dictionary(descriptions_cleaned_splitted)
-        corpus = [dictionary.doc2bow(text) for text in descriptions_cleaned_splitted]
+        corpus = [dictionary.doc2bow(text)
+                  for text in descriptions_cleaned_splitted]
 
         experiment_topic_counts = [20]
         for topic_count in experiment_topic_counts:
@@ -38,7 +42,8 @@ class LdaAll:
 
             lda = self.do_lda(corpus, dictionary, topic_count)
 
-            lda_topics = lda.show_topics(num_topics=topic_count, num_words=100, formatted=False)
+            lda_topics = lda.show_topics(
+                num_topics=topic_count, num_words=100, formatted=False)
             self.print_filtered_lda_topics(lda_topics)
 
             print('================')
@@ -55,13 +60,15 @@ class LdaAll:
             return True
 
         for topic, word_tuples_list in lda_topics:
-            filtered_tuples = [(word, score) for word, score in word_tuples_list
+            filtered_tuples = [(word, score)
+                               for word, score in word_tuples_list
                                if filter_word_tuple(word, score)]
 
             words = [word for word, score in filtered_tuples]
             words_string = ",".join(words)
 
-            words_with_scores = [str(score)[:4] + '*' + word for word, score in filtered_tuples]
+            words_with_scores = [
+                str(score)[:4] + '*' + word for word, score in filtered_tuples]
             words_with_scores_string = ",".join(words_with_scores)
 
             print('id: ' + str(topic + 1))
