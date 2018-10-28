@@ -13,6 +13,7 @@ scikit-learn = "0.20.0"
 pytest = "3.8.2"
 pytest-watch = "4.2.0"
 nbdime = "1.0.2"
+gensim = "3.6.0"
 
 [dev-packages]
 pylint = "2.1.1"
