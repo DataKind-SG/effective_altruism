@@ -1,4 +1,4 @@
-ROOT_PATH = '../..'
+ROOT_PATH = '../../..'
 
 OUTPUT_PATH = ROOT_PATH + '/data/output'
 INPUT_PATH = ROOT_PATH + '/data/input'

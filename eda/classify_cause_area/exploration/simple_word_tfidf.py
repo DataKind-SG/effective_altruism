@@ -1,7 +1,7 @@
 import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 
-DATA_PATH = '../../data'
+DATA_PATH = '../../../data'
 WEB_SCRAPE_PREPROCESSED = DATA_PATH + \
     '/output/classify_cause_area/web_scrape_preprocessed'
 
