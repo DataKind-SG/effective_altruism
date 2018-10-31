@@ -2,6 +2,7 @@
 .iml
 .DS_Store
 .vscode/
+migrated
 
 # Created by https://www.gitignore.io/api/python,intellij,virtualenv,jupyternotebook
 
