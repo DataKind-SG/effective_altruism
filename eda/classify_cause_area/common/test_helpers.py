@@ -3,7 +3,7 @@ import unittest.mock as mock
 
 import pandas as pd
 
-import eda.classify_cause_area.helpers as feat
+import eda.classify_cause_area.common.helpers as feat
 
 
 class GetDescriptionsWithoutStopwordsTest(unittest.TestCase):
@@ -61,8 +61,8 @@ class GetDescriptionsWithoutStopwordsTest(unittest.TestCase):
     def test_should_generate_descriptions_with_unique_words(self):
         expected_result = [
             ["sentence"],
-            ["sentence", "punctuations"],
-            ["sentence", "lemmas", "cook"]
+            ["punctuations", "sentence"],
+            ["cook", "sentence", "lemmas"]
         ]
         result = feat.get_cleaned_descriptions(
             self.descriptions_list, unique_words=True)
@@ -88,14 +88,14 @@ class GetWordCounts(unittest.TestCase):
 
 
 class ReadFromCSVTest(unittest.TestCase):
-    @mock.patch('eda.classify_cause_area.helpers.pd')
+    @mock.patch('eda.classify_cause_area.common.helpers.pd')
     def test_should_read_from_csv(self, mock_pandas):
         feat.read_from_csv('some-csv-path')
 
         mock_pandas.read_csv.assert_called_with(
             'some-csv-path', encoding='ISO-8859-1')
 
-    @mock.patch('eda.classify_cause_area.helpers.pd')
+    @mock.patch('eda.classify_cause_area.common.helpers.pd')
     def test_should_read_from_csv_with_set_encoding(self, mock_pandas):
         feat.read_from_csv('some-csv-path', encoding='UTF-8')
 
