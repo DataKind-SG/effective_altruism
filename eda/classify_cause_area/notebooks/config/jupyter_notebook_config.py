@@ -764,21 +764,5 @@
 #  By default, all installed kernels are allowed.
 #c.KernelSpecManager.whitelist = set()
 
-#  autosave .py + .html for .ipynb
-#  reference: https://www.svds.com/jupyter-notebook-best-practices-for-data-science/
-from subprocess import check_call
-import os
-
-
-def post_save(model, os_path, contents_manager):
-    """post-save hook for converting notebooks to .py scripts"""
-    if model['type'] != 'notebook':
-        return  # only do this for notebooks
-    d, fname = os.path.split(os_path)
-    check_call(['jupyter', 'nbconvert', '--to', 'script',
-                fname, '--output-dir', 'py'], cwd=d)
-    check_call(['jupyter', 'nbconvert', '--to', 'html',
-                fname, '--output-dir', 'html'], cwd=d)
-
-
-c.FileContentsManager.post_save_hook = post_save
+c.NotebookApp.contents_manager_class = "jupytext.TextFileContentsManager"
+c.ContentsManager.default_jupytext_formats = "ipynb,md"

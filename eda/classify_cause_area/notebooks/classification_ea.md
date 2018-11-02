@@ -1,51 +1,69 @@
-#!/usr/bin/env python
-# coding: utf-8
+---
+jupyter:
+  jupytext:
+    text_representation:
+      extension: .md
+      format_name: markdown
+      format_version: '1.0'
+      jupytext_version: 0.8.4
+  kernelspec:
+    display_name: Python 3
+    language: python
+    name: python3
+  language_info:
+    codemirror_mode:
+      name: ipython
+      version: 3
+    file_extension: .py
+    mimetype: text/x-python
+    name: python
+    nbconvert_exporter: python
+    pygments_lexer: ipython3
+    version: 3.6.1
+---
 
-# # EA x DKSG
-# **classification: ea**
-# 
-# classify cause area keywords -> cause areas
-# - expert knowledge & elbow grease from EA team
-# 
-# ## (tldr);
-# - decided against the approach of the generating random features and modelling the features as a multiclass problem
-#     - random features are likely not to have the same distribution of words as observed in web scraped descriptions
-#     - search space is too large (too many permutations of possible features)
-#     - multilabel occurences are rare; most organizations only have 1-3 cause areas
-#     - since multilabel occurences are rare, multilabel approach may not work so well given that multilabel observations are sparse
-# 
-# ## methodology
-# - clean up cause keywords
-#     - drop stopwords
-#     - drop punctuations
-# - create count vectors for each cause area keyword set
-# - use count vectors as feature for classification with
-#     - decision tree
-#     
-# ## hypothesis
-# given a cause area's list of keywords, i should be able to distinguish each cause area uniquely.
-# 
-# ## goal
-# 1. create a model that can distinguish each cause area based on cause area keywords
-# 2. capture related concepts based on existing keywords in each cause area
-# 3. do 1 and 2 with as simple a model as possible (for interpretability)
+# EA x DKSG
+**classification: ea**
 
-# ## setup
+classify cause area keywords -> cause areas
+- expert knowledge & elbow grease from EA team
 
-# In[5]:
+## (tldr);
+- decided against the approach of the generating random features and modelling the features as a multiclass problem
+    - random features are likely not to have the same distribution of words as observed in web scraped descriptions
+    - search space is too large (too many permutations of possible features)
+    - multilabel occurences are rare; most organizations only have 1-3 cause areas
+    - since multilabel occurences are rare, multilabel approach may not work so well given that multilabel observations are sparse
+
+## methodology
+- clean up cause keywords
+    - drop stopwords
+    - drop punctuations
+- create count vectors for each cause area keyword set
+- use count vectors as feature for classification with
+    - decision tree
+    
+## hypothesis
+given a cause area's list of keywords, i should be able to distinguish each cause area uniquely.
+
+## goal
+1. create a model that can distinguish each cause area based on cause area keywords
+2. capture related concepts based on existing keywords in each cause area
+3. do 1 and 2 with as simple a model as possible (for interpretability)
 
 
 ## setup
-get_ipython().run_line_magic('run', 'setup/env_setup.py')
-get_ipython().run_line_magic('run', '../common/filepaths.py')
-get_ipython().run_line_magic('run', '../common/helpers.py')
 
+```python
+## setup
+%run setup/env_setup.py
+%run ../common/filepaths.py
+%run ../common/helpers.py
+```
 
-# ## clean up cause area keywords
+## clean up cause area keywords
 
-# In[6]:
-
-
+```python
 ## ml setup
 import sklearn
 import numpy as np
@@ -54,74 +72,63 @@ from sklearn.preprocessing import LabelBinarizer
 from sklearn import tree
 from sklearn import ensemble
 from sklearn.metrics import accuracy_score
+```
 
-
-# In[7]:
-
-
+```python
 ea_df = read_from_csv(EA_CSV)
+```
 
-
-# In[8]:
-
-
+```python
 ea_df['keywords_clean_words'] = get_cleaned_descriptions(list(ea_df[KEYWORDS_COLUMN]), True, True, False, True)
 ea_df['keywords_clean'] = get_sentence_from_list(list(ea_df['keywords_clean_words']))
+```
 
-
-# In[9]:
-
-
+```python
 ea_df.head()
+```
 
+Q: all cause areas
 
-# Q: all cause areas
-
-# In[10]:
-
-
+```python
 ea_df['Causes/ Columns']
+```
+
+## create features
+#### create cross-cause area keyword groupings
+create sentences of words which correspond to their cause areas
+
+given a set of keywords: 
+
+1) "HIV, AIDs, Clinic" -> Diseases
+
+2) "Recycle, water, plastic" -> Environment
+
+generate the following features for each cause area:
+
+1) **standalone features**:
+eg. ([hiv], [diseases]), ([aids], [diseases]) ...
+
+2) **intra-group features**: 
+eg. ([hiv,aids], [diseases]), ([aids,clinic], [diseases])
+
+3) **inter-group features**: 
+eg. ([hiv,recycle],[diseases,environment]), ([aids,clinic,water,plastic],[diseases,environment]) 
+
+by generating such features, we can train the model to perform multiclass-multilabel classification
 
 
-# ## create features
-# #### create cross-cause area keyword groupings
-# create sentences of words which correspond to their cause areas
-# 
-# given a set of keywords: 
-# 
-# 1) "HIV, AIDs, Clinic" -> Diseases
-# 
-# 2) "Recycle, water, plastic" -> Environment
-# 
-# generate the following features for each cause area:
-# 
-# 1) **standalone features**:
-# eg. ([hiv], [diseases]), ([aids], [diseases]) ...
-# 
-# 2) **intra-group features**: 
-# eg. ([hiv,aids], [diseases]), ([aids,clinic], [diseases])
-# 
-# 3) **inter-group features**: 
-# eg. ([hiv,recycle],[diseases,environment]), ([aids,clinic,water,plastic],[diseases,environment]) 
-# 
-# by generating such features, we can train the model to perform multiclass-multilabel classification
+#### standalone features 
 
-# #### standalone features 
-
-# In[11]:
-
-
+```python
 from collections import namedtuple
 
 words_causes = namedtuple('words_causes','words causes')
 features = []
+```
 
+(note: work not continued, code is just spike approach to generate extended sample)
 
-# (note: work not continued, code is just spike approach to generate extended sample)
-
-# In[12]:
-
-
+```python
 from itertools import chain, combinations
 
 def generate_standalone_features(df):
@@ -160,52 +167,40 @@ def generate_extended_features(standalone_features, max_n_choose):
 n_cause_areas = len(ea_df['Causes/ Columns'])
 n_cause_areas = 2
 extended_features = generate_extended_features(standalone_features,n_cause_areas)
+```
 
-
-# In[13]:
-
-
+```python
 print("number of extended features: %d" % len(extended_features))
+```
 
-
-# In[14]:
-
-
+```python
 extended_features[1:10]
+```
 
-
-# In[15]:
-
-
+```python
 extended_features[100:110]
+```
 
+#### count vectors for each cause area
 
-# #### count vectors for each cause area
-
-# In[16]:
-
-
+```python
 count_vectorizer = CountVectorizer(binary=False)
 
 data_feat = count_vectorizer.fit_transform(ea_df['keywords_clean'])
+```
 
+## create labels: cause areas
 
-# ## create labels: cause areas
-
-# In[17]:
-
-
+```python
 lb = LabelBinarizer()
 data_label = list(ea_df['Causes/ Columns']) 
 data_label_transform = lb.fit_transform(data_label)
+```
 
+## classify and predict (basic)
+- since classifier's performance varies by random state, iterate multiple times to see average model performance
 
-# ## classify and predict (basic)
-# - since classifier's performance varies by random state, iterate multiple times to see average model performance
-
-# In[18]:
-
-
+```python
 def do_classify_dt(random_state=None):
     base_clf = tree.DecisionTreeClassifier(random_state=random_state)
     base_clf.fit(data_feat, data_label_transform)
@@ -216,14 +211,12 @@ def do_classify_dt(random_state=None):
     acc = accuracy_score(data_label, train_predict)
     
     return (base_clf, acc)
+```
 
-
-# In[19]:
-
-
+```python
 base_clf_random_state = range(50)
 base_clf_experiments = [do_classify_dt(i) for i in base_clf_random_state]
 
 base_clf_avg_acc = np.average([acc for (clf,acc) in base_clf_experiments])
 print('base classifier mean accuracy: %f' % base_clf_avg_acc)
-
+```

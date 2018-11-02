@@ -14,6 +14,7 @@ pytest = "3.8.2"
 pytest-watch = "4.2.0"
 nbdime = "1.0.2"
 gensim = "3.6.0"
+jupytext = "*"
 
 [dev-packages]
 pylint = "2.1.1"
@@ -26,4 +27,4 @@ python_version = "3.6"
 notebook = "jupyter notebook"
 test = "pytest eda/classify_cause_area"
 test-watch = "ptw eda/classify_cause_area"
-nbdiff = "nbdime diff-web "
+nbdiff = "nbdime diff-web"
